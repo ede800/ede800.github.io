@@ -69,35 +69,45 @@
 }
 
 
-@media (min-width: 1101px) { .coin-stage { height: 410px; } }
-.coin-eur { --face: radial-gradient(circle at 50% 50%, #f3d27a 0 46%, #d9dde3 47% 100%); --rim: #8f96a3; --size: 96px; top: 10px; left: 40px; --depth: 55px; }
-.coin-eur .coin-face span { color: #1f3a93; font-family: var(--font-body); font-weight: 700; font-size: calc(var(--size) * .5); line-height: 1; }
+@media (min-width: 1101px) {
+  .coin-stage { width: 380px; height: 440px; }
+  .coin-stage .coin { --size: 124px; --t: 13px; }
+  .coin-stage .coin-btc { --size: 148px; top: 0; right: 0; left: auto; }
+  .coin-stage .coin-eur { top: 20px; left: 0; right: auto; }
+  .coin-stage .coin-eth { top: 165px; left: 120px; right: auto; }
+  .coin-stage .coin-cny { top: 305px; left: 10px; right: auto; }
+  .coin-stage .coin-usd { top: 295px; right: 0; left: auto; }
+}
+
+/* Même direction artistique pour toutes les monnaies : face métallique en dégradé, liseré clair, symbole en relief */
+.coin-eur { --face: radial-gradient(circle at 35% 30%, #6f8cff, #1f3fae 55%, #10257a); --rim: #c9a227; --depth: 55px; }
+.coin-cny { --face: radial-gradient(circle at 35% 30%, #ff7a66, #d8261a 55%, #8f150b); --rim: #c9a227; --depth: 45px; }
+.coin-eur .coin-face span, .coin-cny .coin-face span {
+  font-family: var(--font-body); font-weight: 700; font-size: calc(var(--size) * .56); line-height: 1;
+  color: #f5d76e; text-shadow: 0 2px 0 rgba(0, 0, 0, .25), 0 -1px 0 rgba(255, 255, 255, .35);
+}
 .coin-eur .coin-spin { animation-duration: 10s; animation-delay: -4s; }
 .coin-eur .coin-bob { animation-duration: 5.4s; animation-delay: -2s; }
-.coin-cny { --face: radial-gradient(circle at 35% 30%, #ff8a7a, #de2910 55%, #a51a08); --rim: #8c1606; --size: 90px; top: 300px; left: 110px; --depth: 45px; }
-.coin-cny .coin-face span { color: #ffde00; font-family: var(--font-body); font-weight: 700; font-size: calc(var(--size) * .52); line-height: 1; }
 .coin-cny .coin-spin { animation-duration: 7.5s; animation-direction: reverse; animation-delay: -1s; }
 .coin-cny .coin-bob { animation-duration: 4.2s; animation-delay: -3s; }
 
-/* Icônes « nouvelles technologies » animées */
-.tech-icons { display: flex; gap: 12px; height: 56px; margin-bottom: 16px; color: var(--accent); }
-.ti { display: grid; place-items: center; width: 52px; height: 52px; border: 1px solid var(--line); background: #fff; }
-.ti svg { width: 34px; height: 34px; }
-.ti-chip svg { animation: chip 2.4s ease-in-out infinite; }
-.ti-laptop .cursor-blink { animation: typing 2.8s steps(4) infinite; stroke-dasharray: 14; }
-.ti-phone svg { animation: phone 3s ease-in-out infinite; }
-.ti-phone .ping { transform-origin: 24px 24px; animation: ping 1.8s ease-out infinite; }
-@keyframes chip { 50% { transform: scale(1.08); filter: drop-shadow(0 0 6px rgba(47, 76, 255, .55)); } }
-@keyframes typing { 0% { stroke-dashoffset: 14; } 60%, 100% { stroke-dashoffset: 0; } }
-@keyframes phone { 25% { transform: rotate(-8deg); } 75% { transform: rotate(8deg); } }
-@keyframes ping { 0% { transform: scale(.6); opacity: 1; } 100% { transform: scale(1.8); opacity: 0; } }
-.anim-paused .ti svg, .anim-paused .ti .cursor-blink, .anim-paused .ti .ping { animation-play-state: paused !important; }
+/* Tuiles 3D « nouvelles technologies » : même rendu que les pièces, en forme de carré arrondi */
+.tech-icons { display: flex; gap: 14px; height: 60px; margin-bottom: 16px; }
+.tech-icons .coin { position: relative; --size: 56px; --t: 8px; top: auto; left: auto; right: auto; transform: none; }
+.coin-tile .coin-face, .coin-tile .coin-edge i { border-radius: 26%; }
+.coin-tile .coin-face svg { width: 64%; height: 64%; }
+.coin-ai { --face: radial-gradient(circle at 35% 30%, #a78bfa, #6d28d9 55%, #3b0f8a); --rim: #2e0b6e; }
+.coin-pc { --face: radial-gradient(circle at 35% 30%, #7d8794, #2b3340 55%, #12161d); --rim: #0b0e13; }
+.coin-phone { --face: radial-gradient(circle at 35% 30%, #5eead4, #0f9f8a 55%, #075e52); --rim: #054a40; }
+.coin-tile .coin-spin { animation-name: tilt; animation-duration: 4s; animation-timing-function: ease-in-out; }
+.coin-pc .coin-spin { animation-delay: -1.3s; }
+.coin-phone .coin-spin { animation-delay: -2.6s; }
+@keyframes tilt { 0%, 100% { transform: rotateY(-35deg) rotateX(8deg); } 50% { transform: rotateY(35deg) rotateX(-8deg); } }
 @media print { .tech-icons { display: none !important; } }
-@media (prefers-reduced-motion: reduce) { .ti svg, .ti .cursor-blink, .ti .ping { animation: none !important; } }
 
 /* Mini-pièces dans les intérêts */
 .mini-coins { display: flex; gap: 12px; height: 56px; margin-bottom: 16px; }
-.mini-coins .coin { position: relative; --size: 52px; --t: 6px; top: auto; left: auto; right: auto; transform: none; }
+.mini-coins .coin, .mini-coins .coin-stage .coin { position: relative; --size: 56px; --t: 6px; top: auto; left: auto; right: auto; transform: none; }
 .mini-coins .coin-spin { animation-duration: 5s; }
 
 /* Pause globale (bouton du bandeau) */
