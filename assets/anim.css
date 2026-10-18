@@ -1,0 +1,122 @@
+/* =====================================================================
+   Animations & visuels (complète style.css)
+   ===================================================================== */
+
+/* ---------- Apparitions (masquées seulement si JS actif) ---------- */
+.js .reveal:not(.is-in), .js .row:not(.is-in), .js .skill:not(.is-in) { opacity: 0; transform: translateY(28px); }
+.reveal, .row, .skill { transition: opacity .8s var(--ease), transform .8s var(--ease), background-position .7s var(--ease); transition-delay: var(--delay, 0ms); }
+.js .card:not(.is-in) { opacity: 0; transform: translateY(40px) scale(.97); }
+.card { transition: opacity .8s var(--ease) var(--delay, 0ms), transform .45s var(--ease), box-shadow .45s var(--ease); }
+
+/* Titre du hero : la ligne monte depuis un masque */
+.split .line { display: block; overflow: hidden; padding-bottom: .06em; }
+.split .line > span { display: inline-block; animation: rise 1.1s var(--ease) both .1s; }
+@keyframes rise { from { transform: translateY(105%); } }
+.hero .reveal { transition-delay: .35s; }
+.hero .lead.reveal { transition-delay: .5s; }
+.hero .cta.reveal { transition-delay: .65s; }
+
+/* Halo qui suit le curseur dans le hero */
+.hero { position: relative; overflow: hidden; }
+.hero::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(520px circle at var(--mx, 75%) var(--my, 30%), rgba(47, 76, 255, .09), transparent 60%);
+}
+.hero > * { position: relative; z-index: 1; }
+
+/* ---------- Pièces 3D ---------- */
+.coin-stage { position: absolute !important; top: clamp(40px, 7vw, 100px); right: clamp(16px, 4vw, 64px); width: 340px; height: 360px; pointer-events: none; }
+.coin { --size: 150px; --t: 14px; position: absolute; width: var(--size); height: var(--size); perspective: 900px;
+  transform: translate(calc(var(--px, 0) * var(--depth, 30px)), calc(var(--py, 0) * var(--depth, 30px))); transition: transform .4s var(--ease); }
+.coin-spin { position: absolute; inset: 0; transform-style: preserve-3d; animation: spin 7s linear infinite; }
+.coin-bob { position: absolute; inset: 0; animation: bob 4s ease-in-out infinite; }
+.coin-face {
+  position: absolute; inset: 0; display: grid; place-items: center; border-radius: 50%;
+  backface-visibility: hidden; overflow: hidden;
+  background: var(--face); box-shadow: inset 0 0 0 calc(var(--size) * .045) var(--rim), inset 0 0 0 calc(var(--size) * .07) rgba(255, 255, 255, .22);
+}
+.coin-face.front { transform: translateZ(calc(var(--t) / 2)); }
+.coin-face.back { transform: rotateY(180deg) translateZ(calc(var(--t) / 2)); }
+.coin-face::after { /* reflet métallique */
+  content: ""; position: absolute; inset: 0; border-radius: 50%;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, .6) 45%, transparent 60%);
+  mix-blend-mode: overlay;
+}
+.coin-face svg { width: 100%; height: 100%; }
+.coin-edge i { position: absolute; inset: 0; border-radius: 50%; background: var(--rim); transform: translateZ(calc((var(--i) - 5.5) * var(--t) / 12)); }
+@keyframes spin { to { transform: rotateY(360deg); } }
+@keyframes bob { 50% { transform: translateY(-14px); } }
+
+.coin-btc { --face: #fff; --rim: #c96f0a; top: 0; right: 20px; --depth: 40px; }
+.coin-btc .coin-face svg { fill: #f7931a; }
+.coin-eth { --face: radial-gradient(circle at 35% 30%, #8ea2f5, #627eea 55%, #4058c8); --rim: #3a4fb5; --size: 112px; top: 150px; left: 0; --depth: 70px; }
+.coin-eth .coin-face svg { width: 52%; height: 52%; fill: #fff; }
+.coin-eth .coin-spin { animation-duration: 9s; animation-direction: reverse; }
+.coin-eth .coin-bob { animation-duration: 5s; }
+.coin-usd { --face: radial-gradient(circle at 35% 30%, #fbe7a1, #e2b84a 55%, #b8892a); --rim: #9a7020; --size: 124px; top: 220px; right: 0; --depth: 25px; }
+.coin-usd .coin-face span { color: #6b4a0f; font-family: var(--font-body); font-weight: 700; font-size: calc(var(--size) * .58); line-height: 1; text-shadow: 0 2px 0 rgba(255, 255, 255, .35); }
+.coin-usd .coin-spin { animation-duration: 8s; animation-delay: -2s; }
+.coin-usd .coin-bob { animation-duration: 4.6s; animation-delay: -1s; }
+@media (min-width: 1101px) { .hero > .meta, .hero > h1, .hero > .hero-grid { max-width: calc(100% - 380px); } }
+@media (max-width: 1100px) {
+  .coin-stage { position: relative !important; top: auto; right: auto; width: 100%; height: 150px; margin-bottom: 12px; }
+  .coin-stage .coin { --size: 96px; --t: 10px; }
+  .coin-stage .coin-btc { top: 10px; right: auto; left: 0; }
+  .coin-stage .coin-eth { --size: 80px; top: 40px; left: 112px; }
+  .coin-stage .coin-usd { --size: 88px; top: 18px; right: auto; left: 210px; }
+}
+
+/* Mini-pièces dans les intérêts */
+.mini-coins { display: flex; gap: 12px; height: 56px; margin-bottom: 16px; }
+.mini-coins .coin { position: relative; --size: 52px; --t: 6px; top: auto; left: auto; right: auto; transform: none; }
+.mini-coins .coin-spin { animation-duration: 5s; }
+
+/* Pause globale (bouton du bandeau) */
+.anim-paused .marquee-track, .anim-paused .coin-spin, .anim-paused .coin-bob, .anim-paused .dot { animation-play-state: paused !important; }
+
+/* ---------- Logos ---------- */
+.logos { display: flex; align-items: center; gap: 24px 40px; flex-wrap: wrap; margin-top: 40px; }
+.logos ul { display: flex; align-items: center; gap: 28px 44px; flex-wrap: wrap; list-style: none; margin: 0; padding: 0; }
+.logos img { display: block; width: auto; filter: grayscale(1); opacity: .75; transition: filter .3s, opacity .3s, transform .3s var(--ease); }
+.logos li:hover img { filter: none; opacity: 1; transform: translateY(-3px) scale(1.06); }
+@media (min-width: 760px) { .row { grid-template-columns: 56px 170px 1fr 40px; } }
+.r-logo { display: grid; place-items: center; width: 56px; height: 56px; border: 1px solid var(--line); background: #fff; transition: transform .5s var(--ease), border-color .3s; }
+.r-logo img { max-width: 40px; max-height: 32px; }
+.row:hover .r-logo { transform: rotate(-6deg) scale(1.08); border-color: var(--ink); }
+
+/* ---------- Icônes techniques ---------- */
+.marquee span { display: inline-flex; align-items: center; gap: 10px; }
+.marquee img { width: 16px; height: 16px; filter: invert(1); }
+.stack { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 18px 0 0; padding: 0; }
+.stack li { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border: 1px solid var(--line); background: #fff; font: 500 11px var(--font-mono); text-transform: uppercase; transition: transform .3s var(--ease), border-color .3s; }
+.stack li:hover { transform: translateY(-3px); border-color: var(--ink); }
+.stack img { width: 16px; height: 16px; }
+
+/* ---------- Cartes : inclinaison 3D + reflet ---------- */
+.deck { perspective: 1200px; }
+.card { position: relative; }
+.card.is-in { transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); }
+.card.is-in:hover { transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-6px); }
+.card::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s;
+  background: radial-gradient(400px circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, .55), transparent 45%); }
+.card:hover::after { opacity: 1; }
+
+/* ---------- Divers ---------- */
+.top { transition: box-shadow .3s; }
+.top.scrolled { box-shadow: 0 8px 24px -18px rgba(14, 16, 18, .5); }
+.cta .btn, .btn-arrow { transition: background .2s, color .2s, transform .25s var(--ease); }
+.stats b { font-variant-numeric: tabular-nums; }
+.stats b span[data-count] { font-size: inherit; }
+
+@media print {
+  .coin-stage, .mini-coins, .logos, .stack, .r-logo { display: none !important; }
+  .reveal, .row, .skill, .card { opacity: 1 !important; transform: none !important; }
+  .hero > .meta, .hero > h1, .hero > .hero-grid { max-width: none !important; }
+  .row { grid-template-columns: 130px 1fr !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal:not(.is-in), .js .row:not(.is-in), .js .skill:not(.is-in), .js .card:not(.is-in) { opacity: 1; transform: none; }
+  .split .line > span { animation: none; }
+  .coin-spin { animation: none !important; transform: rotateY(-25deg); }
+  .coin, .coin-bob { animation: none !important; transform: none; }
+}
