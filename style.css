@@ -50,7 +50,7 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 }
 .top > * { padding: 16px 20px; }
 .brand { font-weight: 700; border-right: 1px solid var(--line); white-space: nowrap; }
-.top nav { display: flex; flex: 1; overflow-x: auto; padding: 0; scrollbar-width: none; }
+.top nav { display: flex; flex: 1; min-width: 0; overflow-x: auto; padding: 0; scrollbar-width: none; }
 .top nav a { padding: 16px 18px; white-space: nowrap; border-right: 1px solid var(--line); transition: background .2s; }
 .top nav a:hover { background: var(--paper); }
 .idx { color: var(--sub); display: none; }
@@ -71,16 +71,19 @@ h2 { font-size: clamp(44px, 7vw, 72px); line-height: 1; letter-spacing: -.03em; 
   font-size: clamp(48px, 10vw, 136px);
   line-height: .94; letter-spacing: -.04em;
 }
-.hero h1 .sub { font-size: .42em; letter-spacing: -.02em; color: var(--sub); }
+.hero h1 .sub { display: block; margin-top: .35em; font-size: .36em; line-height: 1.12; letter-spacing: -.02em; color: var(--sub); max-width: 24ch; }
+body { overflow-x: hidden; }
 .hero-grid { display: grid; gap: 32px; margin-top: 48px; align-items: end; }
 @media (min-width: 900px) { .hero-grid { grid-template-columns: 1.4fr 1fr; } }
 .lead { margin: 0; max-width: 62ch; font-size: 15px; line-height: 1.7; color: var(--sub); }
 .lead strong { color: var(--ink); font-weight: 600; }
-.cta { display: flex; flex-wrap: wrap; font: 700 12px var(--font-mono); }
+.cta { display: flex; flex-wrap: wrap; gap: 8px 0; font: 700 12px var(--font-mono); }
+.cta .ghost { margin-left: 8px; }
+.cta .btn-arrow + .btn + .ghost { margin-left: 8px; }
 .btn-arrow { background: var(--accent); color: #fff; padding: 14px 16px; }
 .btn { background: var(--ink); color: #fff; padding: 14px 20px; transition: background .2s; }
 .btn:hover { background: var(--accent); }
-.btn.ghost { background: #fff; color: var(--ink); border: 1px solid var(--ink); margin-left: 8px; }
+.btn.ghost { background: #fff; color: var(--ink); border: 1px solid var(--ink); }
 .btn.ghost:hover { background: var(--ink); color: #fff; }
 
 .stats {
@@ -164,18 +167,66 @@ h2 { font-size: clamp(44px, 7vw, 72px); line-height: 1; letter-spacing: -.03em; 
 /* ---------- Contact ---------- */
 .contact .big { font-size: clamp(56px, 11vw, 140px); line-height: .95; letter-spacing: -.04em; margin: 20px 0 48px; }
 .contact-links { border-top: 1px solid var(--line); }
-.contact-links a {
-  display: flex; align-items: baseline; gap: 24px; flex-wrap: wrap;
-  padding: 22px 16px; border-bottom: 1px solid var(--line);
-  font-size: clamp(20px, 3vw, 34px); letter-spacing: -.02em; overflow-wrap: anywhere;
-}
-.contact-links .meta { width: 90px; }
-.contact-links .r-arrow { margin-left: auto; }
-.contact-links a:hover .r-arrow { transform: translateX(6px); color: var(--ink); }
 
 footer {
   display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
   padding: 20px var(--pad); font: 500 11px var(--font-mono); color: var(--sub);
+}
+
+/* ---------- Liens, accessibilité, extras ---------- */
+.ln { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; text-decoration-thickness: 2px; transition: text-decoration-color .2s, color .2s; }
+.ln:hover { color: var(--accent); text-decoration-color: var(--accent); }
+.r-org a { text-decoration: underline; text-underline-offset: 3px; }
+.r-org a:hover { color: var(--ink); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.skip { position: absolute; left: -999px; top: 8px; z-index: 100; background: var(--ink); color: #fff; padding: 10px 14px; font: 600 12px var(--font-mono); }
+.skip:focus { left: 8px; }
+
+.progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 60; background: var(--accent); transform: scaleX(0); transform-origin: 0 50%; }
+.top nav a.active { background: var(--ink); color: #fff; }
+.top nav a.active .idx { color: #9ea1a8; }
+
+button.btn { font: inherit; cursor: pointer; }
+
+.marquee { overflow: hidden; border-bottom: 1px solid var(--line); background: var(--ink); color: #fff; }
+.marquee-track { display: flex; width: max-content; animation: marquee 40s linear infinite; }
+.marquee span { padding: 14px 28px; font: 500 12px var(--font-mono); letter-spacing: .06em; white-space: nowrap; }
+.marquee span::after { content: "◆"; margin-left: 56px; color: var(--accent); }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+.contact-row { display: flex; align-items: baseline; gap: 24px; flex-wrap: wrap; padding: 22px 16px; border-bottom: 1px solid var(--line); font-size: clamp(20px, 3vw, 34px); letter-spacing: -.02em; overflow-wrap: anywhere; }
+.contact-row > a { display: flex; align-items: baseline; gap: 24px; flex-wrap: wrap; }
+.contact-row .meta { width: 90px; }
+.contact-row .r-arrow { margin-left: auto; }
+.contact-row:hover .r-arrow { transform: translateX(6px); color: var(--ink); }
+.copy { margin-left: auto; align-self: center; background: #fff; border: 1px solid var(--ink); padding: 8px 12px; font: 700 11px var(--font-mono); cursor: pointer; }
+.copy:hover { background: var(--ink); color: #fff; }
+
+/* ---------- Impression : CV propre en PDF ---------- */
+@media print {
+  @page { margin: 14mm; }
+  .top, .progress, .marquee, .cta, .copy, .skip, footer, .r-arrow, .sec-head .meta { display: none !important; }
+  body { font-size: 11px; }
+  section { padding: 0 0 14px; border: 0; }
+  .hero h1 { font-size: 32px; margin-top: 4px; }
+  .hero-grid { margin-top: 10px; display: block; }
+  .stats, .stats > div, .card { opacity: 1 !important; transform: none !important; }
+  .stats { margin-top: 12px; grid-template-columns: repeat(5, 1fr); }
+  .stats > div { padding: 8px; }
+  .stats b { font-size: 20px; }
+  h2 { font-size: 22px; } .sec-head { margin-bottom: 8px; }
+  .row { grid-template-columns: 130px 1fr; padding: 8px 0; break-inside: avoid; }
+  .r-what h3 { font-size: 15px; }
+  .deck { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .card { padding: 10px; background: none !important; break-inside: avoid; }
+  .card h3 { font-size: 14px; }
+  .skills { grid-template-columns: repeat(2, 1fr); }
+  .skill { padding: 10px; } .skill p:last-child { font-size: 12px; }
+  .wash { background: none !important; }
+  .contact .big { font-size: 22px; margin: 4px 0 8px; }
+  .contact-row { font-size: 13px; padding: 4px 0; }
+  a { color: inherit !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {
