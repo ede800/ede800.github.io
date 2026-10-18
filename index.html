@@ -6,7 +6,7 @@
 <title>Edouard Zhu | Ingénieur Cybersécurité GRC & Digital Assets</title>
 <meta name="description" content="Élève-ingénieur cybersécurité (ESIEA), alternant GRC chez LVMH : risque tiers (TPRM), NIST CSF 2.0, ISO 27001, DORA, et investigation blockchain on-chain. Disponible en septembre 2027 (CDI).">
 <meta name="author" content="Edouard Zhu">
-<meta name="theme-color" content="#0F172A">
+<meta name="theme-color" content="#ffffff">
 <link rel="canonical" href="https://ede800.github.io/">
 <link rel="alternate" hreflang="fr" href="https://ede800.github.io/">
 <link rel="alternate" hreflang="en" href="https://ede800.github.io/en/">
@@ -26,7 +26,7 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
 <script>document.documentElement.className = "js";</script>
 <script type="application/ld+json">
@@ -60,11 +60,11 @@
     <div class="nav-panel" id="site-nav">
       <nav aria-label="Navigation principale">
         <ul class="nav-links">
-        <li><a href="#apropos">À propos</a></li>
-        <li><a href="#experiences">Expériences</a></li>
-        <li><a href="#etudes">Études de cas</a></li>
-        <li><a href="#competences">Compétences</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#apropos"><span class="idx" aria-hidden="true">[ 00 ]</span>À propos</a></li>
+        <li><a href="#experiences"><span class="idx" aria-hidden="true">[ 01 ]</span>Expériences</a></li>
+        <li><a href="#etudes"><span class="idx" aria-hidden="true">[ 02 ]</span>Études de cas</a></li>
+        <li><a href="#competences"><span class="idx" aria-hidden="true">[ 03 ]</span>Compétences</a></li>
+        <li><a href="#contact"><span class="idx" aria-hidden="true">[ 04 ]</span>Contact</a></li>
         </ul>
       </nav>
       <div class="header-actions">
@@ -112,7 +112,7 @@
   <section id="apropos" class="section" aria-labelledby="apropos-h">
     <div class="wrap about-grid">
       <div>
-        <p class="kicker">À propos</p>
+        <p class="kicker"><span aria-hidden="true">/</span>À propos</p>
         <h2 id="apropos-h">Deux expertises, un même objectif : maîtriser le risque.</h2>
       </div>
       <div class="prose">
@@ -121,19 +121,19 @@
         <p>Passionné d'économie, je m'intéresse de près au fonctionnement de la monnaie — fiduciaire comme cryptomonnaies — et à la blockchain, que je suis à travers une veille réglementaire active (MiCA, DORA, GAFI).</p>
       </div>
       <ul class="pillars">
-        <li><h3>GRC &amp; Audit IT</h3><p>TPRM, vérification par la preuve, NIST CSF 2.0, ISO 27001, arbitrages de risque pour le management.</p></li>
-        <li><h3>Blockchain &amp; investigations</h3><p>Traçage de flux on-chain, analyse de smart contracts et de protocoles DeFi, logique AML / LCB-FT.</p></li>
-        <li><h3>Automatisation</h3><p>Scripts Python sur-mesure pour l'extraction et le parsing de données, développement sécurisé et CI/CD.</p></li>
+        <li class="wash" style="--wash: var(--accent-soft); --c: var(--accent)"><h3>GRC &amp; Audit IT</h3><p>TPRM, vérification par la preuve, NIST CSF 2.0, ISO 27001, arbitrages de risque pour le management.</p></li>
+        <li class="wash" style="--wash: var(--green-soft); --c: var(--green)"><h3>Blockchain &amp; investigations</h3><p>Traçage de flux on-chain, analyse de smart contracts et de protocoles DeFi, logique AML / LCB-FT.</p></li>
+        <li class="wash" style="--wash: var(--orange-soft); --c: var(--orange)"><h3>Automatisation</h3><p>Scripts Python sur-mesure pour l'extraction et le parsing de données, développement sécurisé et CI/CD.</p></li>
       </ul>
     </div>
   </section>
 
   <section id="etudes" class="section section-alt" aria-labelledby="etudes-h">
     <div class="wrap">
-      <p class="kicker">Études de cas &amp; méthodologie</p>
+      <p class="kicker"><span aria-hidden="true">/</span>Études de cas &amp; méthodologie</p>
       <h2 id="etudes-h">Comment je travaille, sur trois sujets concrets.</h2>
       <div class="cases">
-      <article class="case" aria-labelledby="case1">
+      <article class="case" style="--c: var(--accent); --fill: var(--accent-soft)" aria-labelledby="case1">
         <p class="case-meta"><span class="case-num">01</span>GRC · LVMH</p>
         <h3 id="case1">Maîtrise du risque tiers (TPRM) &amp; Security by Design en grand groupe</h3>
         <ol class="case-steps">
@@ -143,7 +143,7 @@
         </ol>
         <ul class="tags" aria-label="Mots-clés"><li>TPRM</li><li>CIAT</li><li>SOC 2</li><li>ISO 27001</li><li>PAS</li></ul>
       </article>
-      <article class="case" aria-labelledby="case2">
+      <article class="case" style="--c: var(--green); --fill: var(--green-soft)" aria-labelledby="case2">
         <p class="case-meta"><span class="case-num">02</span>Blockchain · FAKGROUP</p>
         <h3 id="case2">Investigation forensique on-chain &amp; analyse de flux blockchain</h3>
         <ol class="case-steps">
@@ -153,7 +153,7 @@
         </ol>
         <ul class="tags" aria-label="Mots-clés"><li>Etherscan</li><li>Solscan</li><li>DeFi</li><li>Python</li><li>AML</li></ul>
       </article>
-      <article class="case" aria-labelledby="case3">
+      <article class="case" style="--c: var(--orange); --fill: var(--orange-soft)" aria-labelledby="case3">
         <p class="case-meta"><span class="case-num">03</span>Conformité · LVMH</p>
         <h3 id="case3">Standardisation Groupe (Blueprints) &amp; conformité NIST CSF 2.0</h3>
         <ol class="case-steps">
@@ -169,10 +169,10 @@
 
   <section id="experiences" class="section" aria-labelledby="experiences-h">
     <div class="wrap">
-      <p class="kicker">Expériences</p>
+      <p class="kicker"><span aria-hidden="true">/</span>Expériences</p>
       <h2 id="experiences-h">Parcours professionnel</h2>
       <ol class="timeline">
-      <li class="tl-item">
+      <li class="tl-item wash">
         <div class="tl-date">Sept. 2024 – Présent</div>
         <div class="tl-body">
           <h3>Alternant Gouvernance, Risques &amp; Conformité (GRC) Cybersécurité</h3>
@@ -184,7 +184,7 @@
           </ul>
         </div>
       </li>
-      <li class="tl-item">
+      <li class="tl-item wash">
         <div class="tl-date">Sept. 2023 – Août 2024</div>
         <div class="tl-body">
           <h3>Alternant Développeur &amp; Sécurité</h3>
@@ -195,7 +195,7 @@
           </ul>
         </div>
       </li>
-      <li class="tl-item">
+      <li class="tl-item wash">
         <div class="tl-date">Juil. 2022 – Août 2022</div>
         <div class="tl-body">
           <h3>Stagiaire Développeur Web &amp; Automatisation</h3>
@@ -212,7 +212,7 @@
   <section id="formation" class="section section-alt" aria-labelledby="formation-h">
     <div class="wrap edu-grid">
       <div>
-        <p class="kicker">Formation &amp; distinctions</p>
+        <p class="kicker"><span aria-hidden="true">/</span>Formation &amp; distinctions</p>
         <h2 id="formation-h">Formation</h2>
         <ol class="edu">
         <li class="edu-item"><div class="tl-date">2024 – 2027</div><div><h3>Diplôme d'Ingénieur, spécialisation Cybersécurité</h3><p class="tl-org"><a href="https://www.esiea.fr" target="_blank" rel="noopener">ESIEA<span class="sr-only"> (nouvel onglet)</span></a> <span aria-hidden="true">·</span> Titre CTI, grade de Master · Paris</p></div></li>
@@ -220,7 +220,7 @@
         </ol>
       </div>
       <div class="award">
-        <p class="kicker kicker-gold">Distinction CTF</p>
+        <p class="kicker kicker-gold"><span aria-hidden="true">/</span>Distinction CTF</p>
         <h3>Top 5 % mondial sur Root-Me</h3>
         <p>Plus de 3 900 points. Pratique régulière de challenges d'investigation, de sécurité web et de résolution de problèmes techniques complexes.</p>
         <a class="text-link" href="https://www.root-me.org" target="_blank" rel="noopener">Voir Root-Me <span aria-hidden="true">→</span><span class="sr-only"> (nouvel onglet)</span></a>
@@ -230,13 +230,13 @@
 
   <section id="competences" class="section" aria-labelledby="competences-h">
     <div class="wrap">
-      <p class="kicker">Compétences</p>
+      <p class="kicker"><span aria-hidden="true">/</span>Compétences</p>
       <h2 id="competences-h">Domaines d'expertise</h2>
       <div class="skills">
-      <div class="skill-group"><h3>Gouvernance, Risques &amp; Réglementation</h3><ul class="tags"><li>TPRM</li><li>ISO 27001 / 27005 / 27036</li><li>NIST CSF 2.0</li><li>EBIOS RM</li><li>DORA</li><li>MiCA</li><li>RGPD</li><li>NIS 2</li><li>Modèle CIAT</li><li>Plans d'Assurance Sécurité (PAS/SAP)</li></ul></div>
-      <div class="skill-group"><h3>Blockchain &amp; Digital Assets</h3><ul class="tags"><li>Architecture Ethereum / Bitcoin / L2</li><li>Smart Contracts</li><li>Protocoles DeFi</li><li>Stablecoins</li><li>Tokens (ERC-20, ERC-721)</li><li>Analyse on-chain (Etherscan)</li><li>Logique Chainalysis / Scorechain</li></ul></div>
-      <div class="skill-group"><h3>Sécurité technique &amp; Développement</h3><ul class="tags"><li>Python (data parsing &amp; automatisation)</li><li>SQL</li><li>Django</li><li>Bash</li><li>OWASP Top 10</li><li>CI/CD</li><li>Burp Suite</li><li>Wireshark</li><li>Nmap</li><li>Git</li></ul></div>
-      <div class="skill-group"><h3>Langues</h3><ul class="tags"><li>Français — natif</li><li>Anglais — professionnel B2, usage quotidien</li><li>Chinois — intermédiaire</li></ul></div>
+      <div class="skill-group wash"><h3>Gouvernance, Risques &amp; Réglementation</h3><ul class="tags"><li>TPRM</li><li>ISO 27001 / 27005 / 27036</li><li>NIST CSF 2.0</li><li>EBIOS RM</li><li>DORA</li><li>MiCA</li><li>RGPD</li><li>NIS 2</li><li>Modèle CIAT</li><li>Plans d'Assurance Sécurité (PAS/SAP)</li></ul></div>
+      <div class="skill-group wash"><h3>Blockchain &amp; Digital Assets</h3><ul class="tags"><li>Architecture Ethereum / Bitcoin / L2</li><li>Smart Contracts</li><li>Protocoles DeFi</li><li>Stablecoins</li><li>Tokens (ERC-20, ERC-721)</li><li>Analyse on-chain (Etherscan)</li><li>Logique Chainalysis / Scorechain</li></ul></div>
+      <div class="skill-group wash"><h3>Sécurité technique &amp; Développement</h3><ul class="tags"><li>Python (data parsing &amp; automatisation)</li><li>SQL</li><li>Django</li><li>Bash</li><li>OWASP Top 10</li><li>CI/CD</li><li>Burp Suite</li><li>Wireshark</li><li>Nmap</li><li>Git</li></ul></div>
+      <div class="skill-group wash"><h3>Langues</h3><ul class="tags"><li>Français — natif</li><li>Anglais — professionnel B2, usage quotidien</li><li>Chinois — intermédiaire</li></ul></div>
       </div>
     </div>
   </section>
@@ -244,7 +244,7 @@
   <section id="contact" class="section contact" aria-labelledby="contact-h">
     <div class="wrap contact-grid">
       <div>
-        <p class="kicker">Contact</p>
+        <p class="kicker"><span aria-hidden="true">/</span>Contact</p>
         <h2 id="contact-h">Me contacter</h2>
         <p class="contact-lead">Une opportunité en CDI à partir de septembre 2027, une mission GRC ou une question sur la blockchain ? Écrivez-moi, je réponds rapidement.</p>
       </div>

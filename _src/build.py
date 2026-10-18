@@ -228,7 +228,7 @@ def ext(href, label, t, cls="", extra=""):
 def page(t):
     r = t["root"]
     alt_href, alt_txt, alt_lang, alt_label = t["other_lang"]
-    nav = "\n".join(f'        <li><a href="#{i}">{l}</a></li>' for i, l in t["nav"])
+    nav = "\n".join(f'        <li><a href="#{i}"><span class="idx" aria-hidden="true">[ 0{n} ]</span>{l}</a></li>' for n, (i, l) in enumerate(t["nav"]))
     socials = (
         ext(LINKEDIN, ICONS["linkedin"] + '<span class="sr-only">LinkedIn</span>', t, "icon-btn", ' aria-label="LinkedIn"')
         + f'\n          <a class="icon-btn" href="mailto:{EMAIL}" aria-label="Email : {EMAIL}">{ICONS["mail"]}</a>\n          '
@@ -236,7 +236,7 @@ def page(t):
     )
     facts = "\n".join(f"          <div><dt>{k}</dt><dd>{v}</dd></div>" for k, v in t["facts"])
     about = "\n".join(f"        <p>{p}</p>" for p in t["about"])
-    pillars = "\n".join(f'        <li><h3>{h}</h3><p>{p}</p></li>' for h, p in t["pillars"])
+    pillars = "\n".join(f'        <li class="wash" style="--wash: var(--{col}-soft); --c: var(--{col})"><h3>{h}</h3><p>{p}</p></li>' for (h, p), col in zip(t["pillars"], ["accent", "green", "orange"]))
 
     cases = []
     for n, c in enumerate(t["cases"], 1):
@@ -244,7 +244,8 @@ def page(t):
             f'            <li><span class="step-label">{lbl}</span><p>{txt}</p></li>' for lbl, txt in zip(t["steps"], c["steps"])
         )
         tags = "".join(f"<li>{x}</li>" for x in c["tags"])
-        cases.append(f"""      <article class="case" aria-labelledby="case{n}">
+        color = ["accent", "green", "orange"][n - 1]
+        cases.append(f"""      <article class="case" style="--c: var(--{color}); --fill: var(--{color}-soft)" aria-labelledby="case{n}">
         <p class="case-meta"><span class="case-num">0{n}</span>{c["tag"]}</p>
         <h3 id="case{n}">{c["title"]}</h3>
         <ol class="case-steps">
@@ -257,7 +258,7 @@ def page(t):
     jobs = []
     for org, url, role, place, dates, items in t["jobs"]:
         lis = "\n".join(f"            <li>{i}</li>" for i in items)
-        jobs.append(f"""      <li class="tl-item">
+        jobs.append(f"""      <li class="tl-item wash">
         <div class="tl-date">{dates}</div>
         <div class="tl-body">
           <h3>{role}</h3>
@@ -274,7 +275,7 @@ def page(t):
         for s, u, deg, sub, d in t["schools"]
     )
     skills = "\n".join(
-        f"""      <div class="skill-group"><h3>{g}</h3><ul class="tags">{"".join(f"<li>{x}</li>" for x in items)}</ul></div>"""
+        f"""      <div class="skill-group wash"><h3>{g}</h3><ul class="tags">{"".join(f"<li>{x}</li>" for x in items)}</ul></div>"""
         for g, items in t["skills"]
     )
     copy_btn = f'<button type="button" class="btn btn-ghost btn-sm copy" data-copy="{EMAIL}" data-ok="{t["copied"]}" data-fail="{t["copy_fail"]}">{t["copy"]} <span class="sr-only">{t["copy_sr"]}</span></button>'
@@ -287,7 +288,7 @@ def page(t):
 <title>{t["title"]}</title>
 <meta name="description" content="{t["desc"]}">
 <meta name="author" content="Edouard Zhu">
-<meta name="theme-color" content="#0F172A">
+<meta name="theme-color" content="#ffffff">
 <link rel="canonical" href="{SITE}{t["path"]}">
 <link rel="alternate" hreflang="fr" href="{SITE}">
 <link rel="alternate" hreflang="en" href="{SITE}en/">
@@ -307,7 +308,7 @@ def page(t):
 <link rel="icon" href="{r}assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{r}assets/style.css">
 <script>document.documentElement.className = "js";</script>
 <script type="application/ld+json">
@@ -384,7 +385,7 @@ def page(t):
   <section id="apropos" class="section" aria-labelledby="apropos-h">
     <div class="wrap about-grid">
       <div>
-        <p class="kicker">{t["about_kicker"]}</p>
+        <p class="kicker"><span aria-hidden="true">/</span>{t["about_kicker"]}</p>
         <h2 id="apropos-h">{t["about_h"]}</h2>
       </div>
       <div class="prose">
@@ -398,7 +399,7 @@ def page(t):
 
   <section id="etudes" class="section section-alt" aria-labelledby="etudes-h">
     <div class="wrap">
-      <p class="kicker">{t["cases_kicker"]}</p>
+      <p class="kicker"><span aria-hidden="true">/</span>{t["cases_kicker"]}</p>
       <h2 id="etudes-h">{t["cases_h"]}</h2>
       <div class="cases">
 {cases}
@@ -408,7 +409,7 @@ def page(t):
 
   <section id="experiences" class="section" aria-labelledby="experiences-h">
     <div class="wrap">
-      <p class="kicker">{t["exp_kicker"]}</p>
+      <p class="kicker"><span aria-hidden="true">/</span>{t["exp_kicker"]}</p>
       <h2 id="experiences-h">{t["exp_h"]}</h2>
       <ol class="timeline">
 {jobs}
@@ -419,14 +420,14 @@ def page(t):
   <section id="formation" class="section section-alt" aria-labelledby="formation-h">
     <div class="wrap edu-grid">
       <div>
-        <p class="kicker">{t["edu_kicker"]}</p>
+        <p class="kicker"><span aria-hidden="true">/</span>{t["edu_kicker"]}</p>
         <h2 id="formation-h">{t["edu_h"]}</h2>
         <ol class="edu">
 {schools}
         </ol>
       </div>
       <div class="award">
-        <p class="kicker kicker-gold">{t["award_kicker"]}</p>
+        <p class="kicker kicker-gold"><span aria-hidden="true">/</span>{t["award_kicker"]}</p>
         <h3>{t["award_h"]}</h3>
         <p>{t["award"]}</p>
         {ext("https://www.root-me.org", t["award_link"] + ' <span aria-hidden="true">→</span>', t, "text-link")}
@@ -436,7 +437,7 @@ def page(t):
 
   <section id="competences" class="section" aria-labelledby="competences-h">
     <div class="wrap">
-      <p class="kicker">{t["skills_kicker"]}</p>
+      <p class="kicker"><span aria-hidden="true">/</span>{t["skills_kicker"]}</p>
       <h2 id="competences-h">{t["skills_h"]}</h2>
       <div class="skills">
 {skills}
@@ -447,7 +448,7 @@ def page(t):
   <section id="contact" class="section contact" aria-labelledby="contact-h">
     <div class="wrap contact-grid">
       <div>
-        <p class="kicker">{t["contact_kicker"]}</p>
+        <p class="kicker"><span aria-hidden="true">/</span>{t["contact_kicker"]}</p>
         <h2 id="contact-h">{t["contact_h"]}</h2>
         <p class="contact-lead">{t["contact_lead"]}</p>
       </div>
