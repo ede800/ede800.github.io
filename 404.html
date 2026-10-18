@@ -8,13 +8,12 @@
 <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<main>
-  <section class="contact" style="min-height: 100vh">
+<main id="main">
+  <section class="contact" style="min-height: 100vh" aria-labelledby="titre">
     <p class="meta">/404 — accès refusé par le pare-feu… ou page inexistante</p>
-    <h2 class="big">Rien ici.</h2>
+    <h1 class="big" id="titre">Rien ici.</h1>
     <div class="cta">
-      <a class="btn-arrow" href="/" aria-hidden="true" tabindex="-1">→</a>
-      <a class="btn" href="/">RETOUR AU CV</a>
+      <a class="btn" href="/">RETOUR AU CV <span aria-hidden="true">→</span></a>
     </div>
   </section>
 </main>
