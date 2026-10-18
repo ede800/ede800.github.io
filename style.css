@@ -79,7 +79,6 @@ body { overflow-x: hidden; }
 .lead strong { color: var(--ink); font-weight: 600; }
 .cta { display: flex; flex-wrap: wrap; gap: 8px 0; font: 700 12px var(--font-mono); }
 .cta .ghost { margin-left: 8px; }
-.cta .btn-arrow + .btn + .ghost { margin-left: 8px; }
 .btn-arrow { background: var(--accent); color: #fff; padding: 14px 16px; }
 .btn { background: var(--ink); color: #fff; padding: 14px 20px; transition: background .2s; }
 .btn:hover { background: var(--accent); }
