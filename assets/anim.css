@@ -149,3 +149,34 @@
   .coin-spin { animation: none !important; transform: rotateY(-25deg); }
   .coin, .coin-bob { animation: none !important; transform: none; }
 }
+
+/* ---------- Drapeaux qui flottent au vent ---------- */
+.flags { display: flex; flex-wrap: wrap; gap: 20px 28px; margin: 18px 0 20px; }
+.flag-wrap { margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.flag-wrap figcaption { font: 500 10.5px var(--font-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--sub); padding-left: 10px; }
+.flag { --w: 96px; --h: 64px; position: relative; display: flex; width: var(--w); height: var(--h); margin-left: 10px; }
+.flag::before { /* mât */
+  content: ""; position: absolute; left: -10px; top: -6px; width: 4px; height: calc(var(--h) + 34px);
+  border-radius: 2px; background: linear-gradient(90deg, #8a8d94, #d4d6db 50%, #6b6e75);
+}
+.flag::after { /* pommeau */
+  content: ""; position: absolute; left: -12px; top: -12px; width: 8px; height: 8px; border-radius: 50%; background: #c9a227;
+}
+.flag i {
+  flex: 1; height: 100%;
+  background-size: var(--w) var(--h); background-repeat: no-repeat;
+  background-position: calc(var(--i) * var(--w) / var(--n) * -1) 0;
+  --amp: calc(var(--i) * .45px);
+  animation: wave 1.8s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -.09s);
+}
+.flag-fr i { background-image: url(flags/fr.svg); }
+.flag-gb i { background-image: url(flags/gb.svg); }
+.flag-cn i { background-image: url(flags/cn.svg); }
+@keyframes wave {
+  0%, 100% { transform: translateY(calc(var(--amp) * -1)); filter: brightness(1.08); }
+  50% { transform: translateY(var(--amp)); filter: brightness(.82); }
+}
+.anim-paused .flag i { animation-play-state: paused !important; }
+@media print { .flags { display: none !important; } }
+@media (prefers-reduced-motion: reduce) { .flag i { animation: none !important; } }
