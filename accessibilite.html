@@ -3,68 +3,69 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Accessibilité · Edouard Zhu</title>
-<meta name="description" content="Déclaration d'accessibilité du site CV d'Edouard Zhu.">
+<title>Accessibilité | Edouard Zhu</title>
+<meta name="description" content="Déclaration d'accessibilité du portfolio d'Edouard Zhu.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<style>
-  .doc { max-width: 72ch; }
-  .doc h1 { font-size: clamp(40px, 7vw, 72px); line-height: 1; letter-spacing: -.03em; margin: 16px 0 32px; }
-  .doc h2 { font-size: clamp(22px, 3vw, 28px); letter-spacing: -.02em; margin: 40px 0 12px; }
-  .doc p, .doc li { color: var(--sub); }
-  .doc a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 <a class="skip" href="#main">Aller au contenu</a>
-<header class="top">
-  <a class="brand" href="./">EDOUARD.ZHU</a>
-  <nav aria-label="Navigation principale"><a href="./"><span aria-hidden="true">←</span> RETOUR AU CV</a></nav>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="logo" href="./"><span class="logo-mark" aria-hidden="true">EZ</span><span>Edouard Zhu</span></a>
+    <nav aria-label="Navigation principale" style="margin-left:auto">
+      <a class="btn btn-ghost btn-sm" href="./"><span aria-hidden="true">←</span> Portfolio</a>
+    </nav>
+  </div>
 </header>
 
 <main id="main" tabindex="-1">
-  <section class="doc" aria-labelledby="titre">
-    <p class="meta">/accessibilité</p>
-    <h1 id="titre">Déclaration d'accessibilité</h1>
+  <section class="section" aria-labelledby="titre">
+    <div class="wrap doc">
+      <p class="kicker">Accessibilité</p>
+      <h1 id="titre">Déclaration d'accessibilité</h1>
 
-    <p>Ce site personnel vise la conformité au niveau <strong>AA</strong> des
-    <a href="https://www.w3.org/Translations/WCAG21-fr/">Règles pour l'accessibilité des contenus Web (WCAG)</a>
-    en version 2.2, base du référentiel français
-    <a href="https://accessibilite.numerique.gouv.fr/">RGAA</a>.</p>
+      <p>Ce site personnel vise la conformité au niveau <strong>AA</strong> des
+      <a href="https://www.w3.org/Translations/WCAG21-fr/">Règles pour l'accessibilité des contenus Web (WCAG)</a>
+      en version 2.2, base du référentiel français <a href="https://accessibilite.numerique.gouv.fr/">RGAA</a>.</p>
 
-    <h2>État de conformité</h2>
-    <p>Le site est <strong>partiellement conforme</strong> : il a fait l'objet d'une auto-évaluation, pas d'un audit
-    réalisé par un organisme indépendant.</p>
+      <h2>État de conformité</h2>
+      <p>Le site est <strong>partiellement conforme</strong> : il a fait l'objet d'une auto-évaluation, pas d'un audit
+      réalisé par un organisme indépendant.</p>
 
-    <h2>Mesures mises en place</h2>
-    <ul>
-      <li>Structure sémantique : titres hiérarchisés, régions nommées, listes, langue de la page déclarée.</li>
-      <li>Navigation complète au clavier, focus visible et lien d'évitement « Aller au contenu ».</li>
-      <li>Contrastes de couleurs d'au moins 4,5:1 pour le texte.</li>
-      <li>Liens ouvrant un nouvel onglet signalés aux lecteurs d'écran ; symboles décoratifs masqués.</li>
-      <li>Animations respectant le réglage « réduire les animations » du système ; bandeau défilant avec bouton pause.</li>
-      <li>Contenu lisible jusqu'à 320 px de large et avec un zoom de 200 %, sans défilement horizontal.</li>
-      <li>Tout le contenu reste accessible si JavaScript est désactivé.</li>
-    </ul>
+      <h2>Mesures mises en place</h2>
+      <ul>
+        <li>Structure sémantique : en-tête, navigation, contenu principal et pied de page ; titres hiérarchisés ; régions nommées ; langue de chaque page déclarée (version française et anglaise).</li>
+        <li>Navigation complète au clavier, focus visible, lien d'évitement « Aller au contenu » et menu mobile accessible (bouton avec état ouvert / fermé, fermeture par Échap).</li>
+        <li>Contrastes de couleurs d'au moins 4,5:1 pour le texte.</li>
+        <li>Liens ouvrant un nouvel onglet signalés aux lecteurs d'écran ; icônes et symboles décoratifs masqués ; icônes de contact nommées.</li>
+        <li>Aucune animation automatique ; le défilement doux est désactivé avec le réglage « réduire les animations » du système.</li>
+        <li>Contenu lisible jusqu'à 320 px de large et avec un zoom de 200 %, sans défilement horizontal.</li>
+        <li>Tout le contenu et la navigation restent accessibles si JavaScript est désactivé.</li>
+        <li>CV disponible en PDF, en français et en anglais.</li>
+      </ul>
 
-    <h2>Tests effectués</h2>
-    <p>Analyse automatique avec <a href="https://github.com/dequelabs/axe-core">axe-core</a> (règles WCAG 2.2 A et AA),
-    vérification manuelle des contrastes, du parcours au clavier et de l'affichage en petite largeur.</p>
+      <h2>Tests effectués</h2>
+      <p>Analyse automatique avec <a href="https://github.com/dequelabs/axe-core">axe-core</a> (règles WCAG 2.2 A et AA),
+      vérification manuelle des contrastes, du parcours au clavier, du menu mobile et de l'affichage en petite largeur.</p>
 
-    <h2>Signaler un problème</h2>
-    <p>Si vous rencontrez une difficulté pour accéder à un contenu, écrivez à
-    <a href="mailto:edouardzhu@gmail.com">edouardzhu@gmail.com</a> : une réponse ou une version alternative
-    vous sera proposée.</p>
+      <h2>Signaler un problème</h2>
+      <p>Si vous rencontrez une difficulté pour accéder à un contenu, écrivez à
+      <a href="mailto:edouardzhu@gmail.com">edouardzhu@gmail.com</a> : une réponse ou une version alternative vous sera proposée.</p>
 
-    <p class="meta">Dernière mise à jour : octobre 2026</p>
+      <p>Dernière mise à jour : octobre 2026.</p>
+    </div>
   </section>
 </main>
 
-<footer>
-  <span>© 2026 EDOUARD ZHU</span>
-  <a href="./">RETOUR AU CV <span aria-hidden="true">↑</span></a>
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>© 2026 Edouard Zhu</span>
+    <ul><li><a href="./">Retour au portfolio</a></li><li><a href="en/">English version</a></li></ul>
+  </div>
 </footer>
 </body>
 </html>
