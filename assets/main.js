@@ -89,7 +89,8 @@ if (!reduce && matchMedia('(hover: hover)').matches) {
 }
 
 // Section active dans la navigation
-const links = [...document.querySelectorAll('.top nav a')];
+const nav = document.querySelector('.top nav');
+const links = [...nav.querySelectorAll('a')];
 const spy = new IntersectionObserver((entries) => {
   entries.forEach((e) => {
     if (!e.isIntersecting) return;
@@ -97,6 +98,8 @@ const spy = new IntersectionObserver((entries) => {
       const on = a.getAttribute('href') === '#' + e.target.id;
       a.classList.toggle('active', on);
       on ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current');
+      // Sur mobile, la navigation défile pour garder la section active visible
+      if (on && nav.scrollWidth > nav.clientWidth) nav.scrollTo({ left: a.offsetLeft - 24, behavior: reduce ? 'auto' : 'smooth' });
     });
   });
 }, { rootMargin: '-45% 0px -50% 0px' });
@@ -105,10 +108,14 @@ document.querySelectorAll('main section[id]').forEach((s) => spy.observe(s));
 // Barre de progression + en-tête compact au défilement
 const bar = document.querySelector('.progress');
 const topBar = document.querySelector('.top');
+const toTop = document.querySelector('.to-top');
 const onScroll = () => {
   const d = document.documentElement;
-  bar.style.transform = `scaleX(${d.scrollTop / (d.scrollHeight - d.clientHeight || 1)})`;
+  const p = d.scrollTop / (d.scrollHeight - d.clientHeight || 1);
+  bar.style.transform = `scaleX(${p})`;
   topBar.classList.toggle('scrolled', d.scrollTop > 40);
+  toTop.style.setProperty('--p', p.toFixed(3));
+  toTop.classList.toggle('show', d.scrollTop > innerHeight);
 };
 addEventListener('scroll', onScroll, { passive: true });
 onScroll();
