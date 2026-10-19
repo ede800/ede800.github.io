@@ -89,7 +89,7 @@ body { overflow-x: hidden; }
   display: grid; grid-template-columns: repeat(2, 1fr);
   margin-top: 64px; border-top: 1px solid var(--line); border-left: 1px solid var(--line);
 }
-@media (min-width: 760px) { .stats { grid-template-columns: repeat(5, 1fr); } }
+@media (min-width: 760px) { .stats { grid-template-columns: repeat(4, 1fr); } }
 .stats { list-style: none; padding: 0; }
 .stats > li {
   display: flex; flex-direction: column; gap: 6px;
@@ -218,7 +218,7 @@ button.btn { font: inherit; cursor: pointer; }
   .hero h1 { font-size: 32px; margin-top: 4px; }
   .hero-grid { margin-top: 10px; display: block; }
   .stats, .stats > li, .card { opacity: 1 !important; transform: none !important; }
-  .stats { margin-top: 12px; grid-template-columns: repeat(5, 1fr); }
+  .stats { margin-top: 12px; grid-template-columns: repeat(4, 1fr); }
   .stats > li { padding: 8px; }
   .stats b { font-size: 20px; }
   h2 { font-size: 22px; } .sec-head { margin-bottom: 8px; }
