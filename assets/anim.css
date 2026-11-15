@@ -239,8 +239,8 @@
 .to-top .ring { stroke: var(--accent); stroke-dasharray: 100; stroke-dashoffset: calc(100 - var(--p, 0) * 100); }
 @media print { .to-top { display: none !important; } }
 
-/* Emplacement de logo vide : masqué sur mobile (garde l'alignement sur grand écran) */
-@media (max-width: 759px) { .r-logo:empty { display: none; } }
+/* Logo texte (à la place d'une image) */
+.r-logo-text span { font: 600 11px var(--font-body); letter-spacing: .14em; color: var(--ink); padding-left: .14em; }
 
 /* ---------- Pièces sur téléphone / tablette ----------
    L'empilement 3D (tranche en 12 disques + 2 faces) s'affiche mal sur les navigateurs
