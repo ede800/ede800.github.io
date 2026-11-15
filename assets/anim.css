@@ -238,3 +238,6 @@
 .to-top .ring-bg { stroke: var(--line); }
 .to-top .ring { stroke: var(--accent); stroke-dasharray: 100; stroke-dashoffset: calc(100 - var(--p, 0) * 100); }
 @media print { .to-top { display: none !important; } }
+
+/* Emplacement de logo vide : masqué sur mobile (garde l'alignement sur grand écran) */
+@media (max-width: 759px) { .r-logo:empty { display: none; } }

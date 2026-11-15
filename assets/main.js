@@ -10,7 +10,7 @@ const io = new IntersectionObserver((entries) => {
     if (e.target.matches('.stats > li')) countUp(e.target);
     io.unobserve(e.target);
   });
-}, { threshold: 0.18 });
+}, { threshold: 0, rootMargin: '0px 0px -12% 0px' });
 document.querySelectorAll('.card, .stats > li, .reveal, .row, .skill').forEach((el) => {
   const siblings = [...el.parentElement.children];
   el.style.setProperty('--delay', (siblings.indexOf(el) % 6) * 90 + 'ms');
