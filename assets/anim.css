@@ -241,3 +241,23 @@
 
 /* Emplacement de logo vide : masqué sur mobile (garde l'alignement sur grand écran) */
 @media (max-width: 759px) { .r-logo:empty { display: none; } }
+
+/* ---------- Pièces sur téléphone / tablette ----------
+   L'empilement 3D (tranche en 12 disques + 2 faces) s'affiche mal sur les navigateurs
+   mobiles (Safari iOS surtout : tranche qui passe devant la face, scintillement).
+   Sur écran tactile, on simule la rotation en 2D : la pièce s'affine puis se retourne,
+   avec une tranche dessinée par une ombre portée. */
+@media (hover: none), (max-width: 760px) {
+  .coin { perspective: none; }
+  .coin-spin { transform-style: flat; animation-name: flip2d; will-change: transform; }
+  .coin-edge, .coin-face.back { display: none; }
+  .coin-face.front { transform: none; backface-visibility: visible; box-shadow: inset 0 0 0 calc(var(--size) * .045) var(--rim), inset 0 0 0 calc(var(--size) * .07) rgba(255, 255, 255, .22), calc(var(--size) * .05) 0 0 var(--rim); }
+  .coin-face::after { mix-blend-mode: normal; opacity: .45; }
+  .coin-tile .coin-spin { animation-name: tilt2d; }
+}
+@keyframes flip2d {
+  0%, 50%, 100% { transform: scaleX(1); animation-timing-function: cubic-bezier(.5, 0, .9, .6); }
+  25%, 75% { transform: scaleX(.07); animation-timing-function: cubic-bezier(.1, .4, .5, 1); }
+}
+@keyframes tilt2d { 0%, 100% { transform: scaleX(.82) skewY(-4deg); } 50% { transform: scaleX(.82) skewY(4deg); } }
+@media (prefers-reduced-motion: reduce) and (hover: none), (prefers-reduced-motion: reduce) and (max-width: 760px) { .coin-spin { transform: none !important; } }
