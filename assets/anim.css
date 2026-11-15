@@ -242,22 +242,232 @@
 /* Logo texte (à la place d'une image) */
 .r-logo-text span { font: 600 11px var(--font-body); letter-spacing: .14em; color: var(--ink); padding-left: .14em; }
 
+/* ---------- Pièces : rendu métal (toutes tailles) ---------- */
+/* Faces : reflet doux, liseré métallique, anneau intérieur et ombrage bas pour le relief */
+.coin-face {
+  background:
+    radial-gradient(circle at 30% 22%, rgba(255, 255, 255, .62), rgba(255, 255, 255, 0) 40%),
+    radial-gradient(circle at 72% 86%, rgba(0, 0, 0, .22), rgba(0, 0, 0, 0) 55%),
+    var(--face);
+  box-shadow:
+    inset 0 0 0 calc(var(--size) * .055) var(--rim),
+    inset 0 0 0 calc(var(--size) * .068) rgba(255, 255, 255, .5),
+    inset 0 0 0 calc(var(--size) * .095) rgba(0, 0, 0, .1),
+    inset 0 calc(var(--size) * -.05) calc(var(--size) * .09) rgba(0, 0, 0, .22),
+    inset 0 calc(var(--size) * .04) calc(var(--size) * .06) rgba(255, 255, 255, .3);
+}
+/* Crènelage du bord (pièces rondes) */
+.coin-face::before {
+  content: ""; position: absolute; inset: 0; border-radius: 50%; pointer-events: none;
+  background: repeating-conic-gradient(rgba(255, 255, 255, .38) 0 1.6deg, rgba(0, 0, 0, .16) 1.6deg 3.2deg);
+  -webkit-mask-image: radial-gradient(closest-side, transparent 88.5%, #000 89.5%);
+  mask-image: radial-gradient(closest-side, transparent 88.5%, #000 89.5%);
+}
+.coin-tile .coin-face::before { display: none; }
+/* Reflet qui balaie la face de temps en temps */
+.coin-face::after {
+  border-radius: inherit; mix-blend-mode: normal; opacity: 1;
+  background: linear-gradient(112deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, .55) 50%, rgba(255, 255, 255, 0) 60%) no-repeat;
+  background-size: 300% 100%; background-position: 100% 0;
+  animation: coin-shine 5s ease-in-out infinite;
+}
+@keyframes coin-shine { 0% { background-position: 100% 0; } 32%, 100% { background-position: 0 0; } }
+.coin-eth .coin-face::after, .coin-ai .coin-face::after { animation-delay: -1.2s; }
+.coin-usd .coin-face::after, .coin-pc .coin-face::after { animation-delay: -2.4s; }
+.coin-eur .coin-face::after, .coin-phone .coin-face::after { animation-delay: -3.3s; }
+.coin-cny .coin-face::after, .coin-watch .coin-face::after { animation-delay: -4.1s; }
+/* Symboles en relief */
+.coin-face > svg { filter: drop-shadow(0 1px 0 rgba(255, 255, 255, .35)) drop-shadow(0 -1px 0 rgba(0, 0, 0, .28)); }
+.coin-face > span { text-shadow: 0 1px 0 rgba(255, 255, 255, .4), 0 -1px 0 rgba(0, 0, 0, .3), 0 3px 6px rgba(0, 0, 0, .18); }
+
+/* Bitcoin : même famille que les autres (métal orangé, ₿ blanc en relief) */
+.coin-btc { --face: radial-gradient(circle at 35% 30%, #ffc56b, #f7931a 52%, #b85e08); --rim: #8f4805; }
+.coin-btc .coin-face svg { width: 82%; height: 82%; fill: #fff; }
+.coin-eth { --face: radial-gradient(circle at 35% 30%, #a3b4ff, #627eea 52%, #3048b0); --rim: #2a3d99; }
+
+/* Tranche : métal ombré + stries (visibles quand la pièce est de profil) */
+.coin-edge i {
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, .22) 0 1px, rgba(0, 0, 0, 0) 1px 3px),
+    linear-gradient(180deg, rgba(255, 255, 255, .35), rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, .35)),
+    var(--rim);
+}
+.coin-tile .coin-edge i { border-radius: 26%; }
+
+/* Vraie perspective sur l'élément qui tourne (ordinateur) */
+.coin { perspective: none; }
+.coin-bob { perspective: 700px; }
+
+/* Ombre au sol qui respire avec le flottement */
+.coin { --bob-d: 4s; --bob-dl: 0s; }
+.coin-bob { animation-duration: var(--bob-d); animation-delay: var(--bob-dl); }
+.coin-eth { --bob-d: 5s; }
+.coin-usd { --bob-d: 4.6s; --bob-dl: -1s; }
+.coin-eur { --bob-d: 5.4s; --bob-dl: -2s; }
+.coin-cny { --bob-d: 4.2s; --bob-dl: -3s; }
+.coin::after {
+  content: ""; position: absolute; left: 16%; right: 16%; bottom: calc(var(--size) * -.2); height: calc(var(--size) * .12);
+  border-radius: 50%; pointer-events: none; z-index: -1;
+  background: radial-gradient(closest-side, rgba(14, 16, 18, .26), rgba(14, 16, 18, 0));
+  animation: coin-ground var(--bob-d) ease-in-out infinite var(--bob-dl);
+}
+@keyframes coin-ground { 50% { transform: scale(.72); opacity: .5; } }
+.mini-coins, .tech-icons { margin-bottom: 26px; }
+
 /* ---------- Pièces sur téléphone / tablette ----------
    L'empilement 3D (tranche en 12 disques + 2 faces) s'affiche mal sur les navigateurs
-   mobiles (Safari iOS surtout : tranche qui passe devant la face, scintillement).
-   Sur écran tactile, on simule la rotation en 2D : la pièce s'affine puis se retourne,
-   avec une tranche dessinée par une ombre portée. */
+   mobiles (Safari iOS surtout). Sur écran tactile, la rotation est simulée en 2D :
+   la face s'affine selon l'angle, et un disque « tranche » décalé derrière elle dessine
+   l'épaisseur métallique, d'un côté puis de l'autre, comme une vraie pièce. */
 @media (hover: none), (max-width: 760px) {
-  .coin { perspective: none; }
-  .coin-spin { transform-style: flat; animation-name: flip2d; will-change: transform; }
-  .coin-edge, .coin-face.back { display: none; }
-  .coin-face.front { transform: none; backface-visibility: visible; box-shadow: inset 0 0 0 calc(var(--size) * .045) var(--rim), inset 0 0 0 calc(var(--size) * .07) rgba(255, 255, 255, .22), calc(var(--size) * .05) 0 0 var(--rim); }
-  .coin-face::after { mix-blend-mode: normal; opacity: .45; }
-  .coin-tile .coin-spin { animation-name: tilt2d; }
+  .coin-bob { perspective: none; }
+  .coin-spin { transform-style: flat; animation-name: coin-spin2d; animation-timing-function: linear; will-change: transform, filter; }
+  .coin-face.back { display: none; }
+  .coin-face.front { transform: none; backface-visibility: visible; }
+  /* La tranche = les 12 disques existants, étalés en 2D entre la face et le décalage voulu */
+  .coin-edge { animation-duration: inherit; animation-delay: inherit; animation-direction: inherit; }
+  .coin-edge i {
+    --k: calc(var(--i) / 11); transform: none;
+    background:
+      linear-gradient(90deg, rgba(0, 0, 0, .3), rgba(255, 255, 255, .18) 50%, rgba(0, 0, 0, .3)),
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, .2) 0 1px, rgba(0, 0, 0, 0) 1px 3px),
+      var(--rim);
+    animation: coin-edge2d linear infinite;
+    animation-duration: inherit; animation-delay: inherit; animation-direction: inherit;
+  }
+  .coin-tile .coin-spin { animation-name: coin-tilt2d; animation-timing-function: linear; }
+  .coin-tile .coin-edge i { animation-name: coin-tiltedge2d; }
+  .coin-stage { height: 136px; }
 }
-@keyframes flip2d {
-  0%, 50%, 100% { transform: scaleX(1); animation-timing-function: cubic-bezier(.5, 0, .9, .6); }
-  25%, 75% { transform: scaleX(.07); animation-timing-function: cubic-bezier(.1, .4, .5, 1); }
+@keyframes coin-spin2d {
+  0% { transform: scaleX(1); filter: brightness(1.08); }
+  2.778% { transform: scaleX(0.985); filter: brightness(1.075); }
+  5.556% { transform: scaleX(0.94); filter: brightness(1.062); }
+  8.333% { transform: scaleX(0.866); filter: brightness(1.04); }
+  11.111% { transform: scaleX(0.766); filter: brightness(1.01); }
+  13.889% { transform: scaleX(0.643); filter: brightness(0.973); }
+  16.667% { transform: scaleX(0.5); filter: brightness(0.93); }
+  19.444% { transform: scaleX(0.342); filter: brightness(0.883); }
+  22.222% { transform: scaleX(0.174); filter: brightness(0.832); }
+  25% { transform: scaleX(0.05); filter: brightness(0.78); }
+  27.778% { transform: scaleX(0.174); filter: brightness(0.832); }
+  30.556% { transform: scaleX(0.342); filter: brightness(0.883); }
+  33.333% { transform: scaleX(0.5); filter: brightness(0.93); }
+  36.111% { transform: scaleX(0.643); filter: brightness(0.973); }
+  38.889% { transform: scaleX(0.766); filter: brightness(1.01); }
+  41.667% { transform: scaleX(0.866); filter: brightness(1.04); }
+  44.444% { transform: scaleX(0.94); filter: brightness(1.062); }
+  47.222% { transform: scaleX(0.985); filter: brightness(1.075); }
+  50% { transform: scaleX(1); filter: brightness(1.08); }
+  52.778% { transform: scaleX(0.985); filter: brightness(1.075); }
+  55.556% { transform: scaleX(0.94); filter: brightness(1.062); }
+  58.333% { transform: scaleX(0.866); filter: brightness(1.04); }
+  61.111% { transform: scaleX(0.766); filter: brightness(1.01); }
+  63.889% { transform: scaleX(0.643); filter: brightness(0.973); }
+  66.667% { transform: scaleX(0.5); filter: brightness(0.93); }
+  69.444% { transform: scaleX(0.342); filter: brightness(0.883); }
+  72.222% { transform: scaleX(0.174); filter: brightness(0.832); }
+  75% { transform: scaleX(0.05); filter: brightness(0.78); }
+  77.778% { transform: scaleX(0.174); filter: brightness(0.832); }
+  80.556% { transform: scaleX(0.342); filter: brightness(0.883); }
+  83.333% { transform: scaleX(0.5); filter: brightness(0.93); }
+  86.111% { transform: scaleX(0.643); filter: brightness(0.973); }
+  88.889% { transform: scaleX(0.766); filter: brightness(1.01); }
+  91.667% { transform: scaleX(0.866); filter: brightness(1.04); }
+  94.444% { transform: scaleX(0.94); filter: brightness(1.062); }
+  97.222% { transform: scaleX(0.985); filter: brightness(1.075); }
+  100% { transform: scaleX(1); filter: brightness(1.08); }
 }
-@keyframes tilt2d { 0%, 100% { transform: scaleX(.82) skewY(-4deg); } 50% { transform: scaleX(.82) skewY(4deg); } }
-@media (prefers-reduced-motion: reduce) and (hover: none), (prefers-reduced-motion: reduce) and (max-width: 760px) { .coin-spin { transform: none !important; } }
+@keyframes coin-edge2d {
+  0% { transform: translateX(calc(var(--t) * 0 * var(--k))); }
+  2.778% { transform: translateX(calc(var(--t) * 0.176 * var(--k))); }
+  5.556% { transform: translateX(calc(var(--t) * 0.364 * var(--k))); }
+  8.333% { transform: translateX(calc(var(--t) * 0.577 * var(--k))); }
+  11.111% { transform: translateX(calc(var(--t) * 0.839 * var(--k))); }
+  13.889% { transform: translateX(calc(var(--t) * 1.192 * var(--k))); }
+  16.667% { transform: translateX(calc(var(--t) * 1.732 * var(--k))); }
+  19.444% { transform: translateX(calc(var(--t) * 2.747 * var(--k))); }
+  22.222% { transform: translateX(calc(var(--t) * 5.671 * var(--k))); }
+  25% { transform: translateX(calc(var(--t) * 20 * var(--k))); }
+  27.778% { transform: translateX(calc(var(--t) * 5.671 * var(--k))); }
+  30.556% { transform: translateX(calc(var(--t) * 2.747 * var(--k))); }
+  33.333% { transform: translateX(calc(var(--t) * 1.732 * var(--k))); }
+  36.111% { transform: translateX(calc(var(--t) * 1.192 * var(--k))); }
+  38.889% { transform: translateX(calc(var(--t) * 0.839 * var(--k))); }
+  41.667% { transform: translateX(calc(var(--t) * 0.577 * var(--k))); }
+  44.444% { transform: translateX(calc(var(--t) * 0.364 * var(--k))); }
+  47.222% { transform: translateX(calc(var(--t) * 0.176 * var(--k))); }
+  50% { transform: translateX(calc(var(--t) * 0 * var(--k))); }
+  52.778% { transform: translateX(calc(var(--t) * -0.176 * var(--k))); }
+  55.556% { transform: translateX(calc(var(--t) * -0.364 * var(--k))); }
+  58.333% { transform: translateX(calc(var(--t) * -0.577 * var(--k))); }
+  61.111% { transform: translateX(calc(var(--t) * -0.839 * var(--k))); }
+  63.889% { transform: translateX(calc(var(--t) * -1.192 * var(--k))); }
+  66.667% { transform: translateX(calc(var(--t) * -1.732 * var(--k))); }
+  69.444% { transform: translateX(calc(var(--t) * -2.747 * var(--k))); }
+  72.222% { transform: translateX(calc(var(--t) * -5.671 * var(--k))); }
+  75% { transform: translateX(calc(var(--t) * -20 * var(--k))); }
+  77.778% { transform: translateX(calc(var(--t) * -5.671 * var(--k))); }
+  80.556% { transform: translateX(calc(var(--t) * -2.747 * var(--k))); }
+  83.333% { transform: translateX(calc(var(--t) * -1.732 * var(--k))); }
+  86.111% { transform: translateX(calc(var(--t) * -1.192 * var(--k))); }
+  88.889% { transform: translateX(calc(var(--t) * -0.839 * var(--k))); }
+  91.667% { transform: translateX(calc(var(--t) * -0.577 * var(--k))); }
+  94.444% { transform: translateX(calc(var(--t) * -0.364 * var(--k))); }
+  97.222% { transform: translateX(calc(var(--t) * -0.176 * var(--k))); }
+  100% { transform: translateX(calc(var(--t) * 0 * var(--k))); }
+}
+@keyframes coin-tilt2d {
+  0% { transform: scaleX(0.829); filter: brightness(1.002); }
+  5% { transform: scaleX(0.845); filter: brightness(1.006); }
+  10% { transform: scaleX(0.887); filter: brightness(1.015); }
+  15% { transform: scaleX(0.94); filter: brightness(1.027); }
+  20% { transform: scaleX(0.983); filter: brightness(1.036); }
+  25% { transform: scaleX(1); filter: brightness(1.04); }
+  30% { transform: scaleX(0.983); filter: brightness(1.036); }
+  35% { transform: scaleX(0.94); filter: brightness(1.027); }
+  40% { transform: scaleX(0.887); filter: brightness(1.015); }
+  45% { transform: scaleX(0.845); filter: brightness(1.006); }
+  50% { transform: scaleX(0.829); filter: brightness(1.002); }
+  55% { transform: scaleX(0.845); filter: brightness(1.006); }
+  60% { transform: scaleX(0.887); filter: brightness(1.015); }
+  65% { transform: scaleX(0.94); filter: brightness(1.027); }
+  70% { transform: scaleX(0.983); filter: brightness(1.036); }
+  75% { transform: scaleX(1); filter: brightness(1.04); }
+  80% { transform: scaleX(0.983); filter: brightness(1.036); }
+  85% { transform: scaleX(0.94); filter: brightness(1.027); }
+  90% { transform: scaleX(0.887); filter: brightness(1.015); }
+  95% { transform: scaleX(0.845); filter: brightness(1.006); }
+  100% { transform: scaleX(0.829); filter: brightness(1.002); }
+}
+@keyframes coin-tiltedge2d {
+  0% { transform: translateX(calc(var(--t) * -0.675 * var(--k))); }
+  5% { transform: translateX(calc(var(--t) * -0.633 * var(--k))); }
+  10% { transform: translateX(calc(var(--t) * -0.521 * var(--k))); }
+  15% { transform: translateX(calc(var(--t) * -0.364 * var(--k))); }
+  20% { transform: translateX(calc(var(--t) * -0.185 * var(--k))); }
+  25% { transform: translateX(calc(var(--t) * 0 * var(--k))); }
+  30% { transform: translateX(calc(var(--t) * 0.185 * var(--k))); }
+  35% { transform: translateX(calc(var(--t) * 0.364 * var(--k))); }
+  40% { transform: translateX(calc(var(--t) * 0.521 * var(--k))); }
+  45% { transform: translateX(calc(var(--t) * 0.633 * var(--k))); }
+  50% { transform: translateX(calc(var(--t) * 0.675 * var(--k))); }
+  55% { transform: translateX(calc(var(--t) * 0.633 * var(--k))); }
+  60% { transform: translateX(calc(var(--t) * 0.521 * var(--k))); }
+  65% { transform: translateX(calc(var(--t) * 0.364 * var(--k))); }
+  70% { transform: translateX(calc(var(--t) * 0.185 * var(--k))); }
+  75% { transform: translateX(calc(var(--t) * 0 * var(--k))); }
+  80% { transform: translateX(calc(var(--t) * -0.185 * var(--k))); }
+  85% { transform: translateX(calc(var(--t) * -0.364 * var(--k))); }
+  90% { transform: translateX(calc(var(--t) * -0.521 * var(--k))); }
+  95% { transform: translateX(calc(var(--t) * -0.633 * var(--k))); }
+  100% { transform: translateX(calc(var(--t) * -0.675 * var(--k))); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coin-face::after, .coin::after, .coin-edge i { animation: none !important; }
+}
+@media (prefers-reduced-motion: reduce) and (hover: none), (prefers-reduced-motion: reduce) and (max-width: 760px) {
+  .coin-spin { transform: none !important; filter: none !important; }
+}
+@media print { .coin::after { display: none; } }
